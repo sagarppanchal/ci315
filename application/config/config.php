@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://172.10.24.37/git/Dnato-system-login/'; //change link
+$config['base_url'] = 'http://172.10.24.37/git/ci315/'; //change link
 
 /*
 |--------------------------------------------------------------------------
