@@ -1,5 +1,5 @@
 git
-
+git clone
 git add ./
 git commit -m "yourmsg"
 git push origin branchname
