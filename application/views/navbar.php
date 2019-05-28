@@ -48,7 +48,7 @@
                         <li><a href="<?php echo site_url();?>main/profile"><?php echo $email; ?></a></li>
                         <li><a href="<?php echo site_url();?>main/changeuser">Edit Profile</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="<?php echo base_url().'main/logout' ?>">Log Out</a></li>
+                        <li><a href="<?php echo base_url().'auth/auth/logout' ?>">Log Out</a></li>
                       </ul>
                     </li>
                   </ul>
