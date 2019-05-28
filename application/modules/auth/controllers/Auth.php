@@ -8,6 +8,7 @@ class Auth extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
+		$this->load->helper('common');
 		
 
 		$this->load->model('User_model', 'user_model', TRUE);
@@ -24,17 +25,15 @@ class Auth extends CI_Controller
         $this->load->view('container');
         $this->load->view('login');
         $this->load->view('footer');
-        $this->load->helper('helper');
+        
 	}
 
 	public function login()
     {
     	$data = $this->session->userdata;
-    	pr($data);
-
-    	die;
-
-        if(!empty($data['email'])){
+    	$post = $this->input->post();
+    	
+    	if(!empty($data['email'])){
 	        redirect(site_url().'main/');
 	    }else{
 	        $this->load->library('curl');
@@ -99,8 +98,8 @@ class Auth extends CI_Controller
                 }else{
                     if(!$userInfo)
                     {
-                        $this->session->set_flashdata('flash_message', 'Wrong password or email.');
-                        redirect(site_url().'main/login');
+                    	$this->session->set_flashdata('flash_message', 'Wrong password or email.');
+                        redirect(site_url().'auth/login/login');
                     }
                     elseif($userInfo->banned_users == "ban")
                     {
@@ -116,6 +115,7 @@ class Auth extends CI_Controller
                     }
                     else
                     {
+                    	die("qwer");
                         $this->session->set_flashdata('flash_message', 'Something Error!');
                         redirect(site_url().'main/login/');
                         exit;
@@ -123,6 +123,12 @@ class Auth extends CI_Controller
                 }
             }
 	    }
+    }
+
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(site_url().'main/login/');
     }
 	
 	private function login_facebook() {
