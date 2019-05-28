@@ -702,7 +702,7 @@ class Main extends CI_Controller {
     {
         $this->session->sess_destroy();
         redirect(site_url().'main/login/');
-    }
+    } 
 
     //forgot password
     public function forgot()
