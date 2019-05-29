@@ -1,9 +1,0 @@
-git
-git clone
-git add ./
-git commit -m "yourmsg"
-git push origin branchname
-git checkout -b branch name
-git checkout branchname
-git branch -d branchname (delete)
-git status
