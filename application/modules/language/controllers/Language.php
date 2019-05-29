@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 //require_once(FCPATH."vendor/thetechnicalcircle/codeigniter_social_login/src/Social.php");
 
-class Dashboard extends CI_Controller 
+class Language extends CI_Controller 
 {
 	function __construct(){
 		parent::__construct();
@@ -29,7 +29,7 @@ class Dashboard extends CI_Controller
 	}
 
 	public function Auth(){
-		$this->load->view('language/lan_view');   
+		die("In the login auth");
 	}
 	
 	private function login_facebook() {
