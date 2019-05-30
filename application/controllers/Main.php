@@ -46,9 +46,7 @@ class Main extends CI_Controller {
 
 	}
 	
-	public function checkLoginUser()
-    {
-	     //user data from session
+	public function checkLoginUser(){
         $data = $this->session->userdata;
         if(empty($data)){
             redirect(site_url().'main/login/');
@@ -98,8 +96,7 @@ class Main extends CI_Controller {
             $this->input->set_cookie($setLogin, TRUE);
             redirect(site_url().'main/');
         }
-	    
-	}
+    }
 	
 	public function settings(){
 	    $data = $this->session->userdata;
@@ -158,7 +155,6 @@ class Main extends CI_Controller {
 
 	}
     
-    	//user list
 	public function users()
 	{
 	    $data = $this->session->userdata;

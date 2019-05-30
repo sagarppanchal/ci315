@@ -1,0 +1,8 @@
+https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/cosmo/bootstrap.min.css
+darkly
+flatly
+journal
+lumen
+slate
+superhero
+yeti
