@@ -26,6 +26,21 @@ class Dashboard extends CI_Controller
 	    if(empty($data['role'])){
 	        redirect(site_url().'auth/auth/');
 	    }
+
+	    $dataLevel = $this->userlevel->checkLevel($data['role']);
+	    //check user level
+        
+	    $data['title'] = "Dashboard Admin";
+	    
+        if(empty($this->session->userdata['email'])){
+            redirect(site_url().'main/login/');
+        }else{
+        	$this->load->view('header', $data);
+            $this->load->view('navbar', $data);
+            $this->load->view('container');
+            $this->load->view('index', $data);
+            $this->load->view('footer');
+        }
 	}
 
 	public function Auth(){

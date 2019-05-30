@@ -2,7 +2,7 @@
     <h2>Change Level</h2>
     <h5>Hi <span><?php echo $first_name; ?></span>, <br>Please choose the level user.</h5>     
     <?php $fattr = array('class' => 'form-signin');
-         echo form_open(site_url().'main/changelevel/', $fattr); ?>
+         echo form_open(site_url().'user/changelevel', $fattr); ?>
     
     <div class="form-group">
         <select class="form-control" name="email" id="email">
@@ -28,6 +28,6 @@
     ?>
     </div>
     <?php echo form_submit(array('value'=>'Submit', 'class'=>'btn btn-lg btn-primary btn-block')); ?>
-    <a href="<?php echo site_url().'main/users/';?>"><button type="button" class="btn btn-default btn-lg btn-block">Cancel</button></a>
+    <a href="<?php echo site_url().'user';?>"><button type="button" class="btn btn-default btn-lg btn-block">Cancel</button></a>
     <?php echo form_close(); ?>
 </div>
