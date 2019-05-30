@@ -6,7 +6,7 @@
         <hr>
         <?php
         $fattr = array('class' => 'form-signin');
-        echo form_open(site_url().'main/settings/', $fattr); 
+        echo form_open(site_url().'settings/', $fattr); 
         
         function tz_list() {
             $zones_array = array();
