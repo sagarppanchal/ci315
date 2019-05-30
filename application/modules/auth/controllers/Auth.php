@@ -19,117 +19,167 @@ class Auth extends CI_Controller
 	    $this->load->library('userlevel');
   	}
   
+  /*
+    index()
+    purpose : login
+  */
+
 	public function index(){
-		$data["title"]="Login";
-		$this->load->view('custom_header',$data);
-        $this->load->view('container');
-        $this->load->view('login');
-        $this->load->view('footer');
+		$data = $this->session->userdata;
+    $post = $this->input->post();
+    
+    if(!empty($data['email'])){
+        redirect(site_url().'dashboard');
+    }else{
+          $this->load->library('curl');
+          $this->load->library('recaptcha');
+          $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+          $this->form_validation->set_rules('password', 'Password', 'required');
+          
+          $data['title'] = "Welcome Back!";
+          
+          $result = $this->user_model->getAllSettings();
+          $data['recaptcha'] = $result->recaptcha;
+
+          if($this->form_validation->run() == FALSE) {
+              $this->load->view('header', $data);
+              $this->load->view('container');
+              $this->load->view('login');
+              $this->load->view('footer');
+          }else{
+              $post = $this->input->post();
+              $clean = $this->security->xss_clean($post);
+              $userInfo = $this->user_model->checkLogin($clean);
+              
+              if($data['recaptcha'] == 'yes'){
+                  //recaptcha
+                  $recaptchaResponse = $this->input->post('g-recaptcha-response');
+                  $userIp = $_SERVER['REMOTE_ADDR'];
+                  $key = $this->recaptcha->secret;
+                  $url = "https://www.google.com/recaptcha/api/siteverify?secret=".$key."&response=".$recaptchaResponse."&remoteip=".$userIp; //link
+                  $response = $this->curl->simple_get($url);
+                  $status= json_decode($response, true);
+  
+                  if(!$userInfo)
+                  {
+                      $this->session->set_flashdata('flash_message', 'Wrong password or email.');
+                      redirect(site_url().'auth');
+                  }
+                  elseif($userInfo->banned_users == "ban")
+                  {
+                      $this->session->set_flashdata('danger_message', 'You’re temporarily banned from our website!');
+                      redirect(site_url().'auth');
+                  }
+                  else if(!$status['success'])
+                  {
+                      //recaptcha failed
+                      $this->session->set_flashdata('flash_message', 'Error...! Google Recaptcha UnSuccessful!');
+                      redirect(site_url().'auth');
+                      exit;
+                  }
+                  elseif($status['success'] && $userInfo && $userInfo->banned_users == "unban") //recaptcha check, success login, ban or unban
+                  {
+                      foreach($userInfo as $key=>$val){
+                      $this->session->set_userdata($key, $val);
+                      }
+                      redirect(site_url().'auth/checkLoginUser');
+                  }
+                  else
+                  {
+                      $this->session->set_flashdata('flash_message', 'Something Error!');
+                      redirect(site_url().'auth');
+                      exit;
+                  }
+              }else{
+                  if(!$userInfo)
+                  {
+                    $this->session->set_flashdata('flash_message', 'Wrong password or email.');
+                      redirect(site_url().'auth');
+                  }
+                  elseif($userInfo->banned_users == "ban")
+                  {
+                      $this->session->set_flashdata('danger_message', 'You’re temporarily banned from our website!');
+                      redirect(site_url().'auth');
+                  }
+                  elseif($userInfo && $userInfo->banned_users == "unban") //recaptcha check, success login, ban or unban
+                  {
+                      foreach($userInfo as $key=>$val){
+                      $this->session->set_userdata($key, $val);
+                      }
+                      redirect(site_url().'auth/checkLoginUser');
+                  }
+                  else
+                  {
+                      $this->session->set_flashdata('flash_message', 'Something Error!');
+                      redirect(site_url().'main/login');
+                      exit;
+                  }
+              }
+          }
+    }
         
 	}
 
-	public function login()
-    {
-    	$data = $this->session->userdata;
-    	$post = $this->input->post();
-    	
-    	if(!empty($data['email'])){
-	        redirect(site_url().'main/');
-	    }else{
-	        $this->load->library('curl');
-            $this->load->library('recaptcha');
-            $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-            $this->form_validation->set_rules('password', 'Password', 'required');
-            
-            $data['title'] = "Welcome Back!";
-            
-            $result = $this->user_model->getAllSettings();
-            $data['recaptcha'] = $result->recaptcha;
 
-            if($this->form_validation->run() == FALSE) {
-                $this->load->view('header', $data);
-                $this->load->view('container');
-                $this->load->view('login');
-                $this->load->view('footer');
-            }else{
-                $post = $this->input->post();
-                $clean = $this->security->xss_clean($post);
-                $userInfo = $this->user_model->checkLogin($clean);
-                
-                if($data['recaptcha'] == 'yes'){
-                    //recaptcha
-                    $recaptchaResponse = $this->input->post('g-recaptcha-response');
-                    $userIp = $_SERVER['REMOTE_ADDR'];
-                    $key = $this->recaptcha->secret;
-                    $url = "https://www.google.com/recaptcha/api/siteverify?secret=".$key."&response=".$recaptchaResponse."&remoteip=".$userIp; //link
-                    $response = $this->curl->simple_get($url);
-                    $status= json_decode($response, true);
-    
-                    if(!$userInfo)
-                    {
-                        $this->session->set_flashdata('flash_message', 'Wrong password or email.');
-                        redirect(site_url().'main/login');
-                    }
-                    elseif($userInfo->banned_users == "ban")
-                    {
-                        $this->session->set_flashdata('danger_message', 'You’re temporarily banned from our website!');
-                        redirect(site_url().'main/login');
-                    }
-                    else if(!$status['success'])
-                    {
-                        //recaptcha failed
-                        $this->session->set_flashdata('flash_message', 'Error...! Google Recaptcha UnSuccessful!');
-                        redirect(site_url().'main/login/');
-                        exit;
-                    }
-                    elseif($status['success'] && $userInfo && $userInfo->banned_users == "unban") //recaptcha check, success login, ban or unban
-                    {
-                        foreach($userInfo as $key=>$val){
-                        $this->session->set_userdata($key, $val);
-                        }
-                        redirect(site_url().'main/checkLoginUser/');
-                    }
-                    else
-                    {
-                        $this->session->set_flashdata('flash_message', 'Something Error!');
-                        redirect(site_url().'main/login/');
-                        exit;
-                    }
-                }else{
-                    if(!$userInfo)
-                    {
-                    	$this->session->set_flashdata('flash_message', 'Wrong password or email.');
-                        redirect(site_url().'auth/login/login');
-                    }
-                    elseif($userInfo->banned_users == "ban")
-                    {
-                        $this->session->set_flashdata('danger_message', 'You’re temporarily banned from our website!');
-                        redirect(site_url().'main/login');
-                    }
-                    elseif($userInfo && $userInfo->banned_users == "unban") //recaptcha check, success login, ban or unban
-                    {
-                        foreach($userInfo as $key=>$val){
-                        $this->session->set_userdata($key, $val);
-                        }
-                        redirect(site_url().'main/checkLoginUser/');
-                    }
-                    else
-                    {
-                    	die("qwer");
-                        $this->session->set_flashdata('flash_message', 'Something Error!');
-                        redirect(site_url().'main/login/');
-                        exit;
-                    }
-                }
-            }
-	    }
-    }
+  public function checkLoginUser()
+  {
+     //user data from session
+      $data = $this->session->userdata;
+      if(empty($data)){
+          redirect(site_url().'auth');
+      }
 
-    public function logout()
-    {
-        $this->session->sess_destroy();
-        redirect(site_url().'main/login/');
-    }
+      $this->load->library('user_agent');
+      $browser = $this->agent->browser();
+      $os = $this->agent->platform();
+      $getip = $this->input->ip_address();
+
+      $result = $this->user_model->getAllSettings();
+      $stLe = $result->site_title;
+      $tz = $result->timezone;
+
+      $now = new DateTime();
+      $now->setTimezone(new DateTimezone($tz));
+      $dTod =  $now->format('Y-m-d');
+      $dTim =  $now->format('H:i:s');
+
+      $this->load->helper('cookie');
+      $keyid = rand(1,9000);
+      $scSh = sha1($keyid);
+      $neMSC = md5($data['email']);
+      $setLogin = array(
+          'name'   => $neMSC,
+          'value'  => $scSh,
+          'expire' => strtotime("+2 year"),
+      );
+      $getAccess = get_cookie($neMSC);
+
+      if(!$getAccess && $setLogin["name"] == $neMSC){
+          $this->load->library('email');
+          $this->load->library('sendmail');
+          $bUrl = base_url();
+          $message = $this->sendmail->secureMail($data['first_name'],$data['last_name'],$data['email'],$dTod,$dTim,$stLe,$browser,$os,$getip,$bUrl);
+          $to_email = $data['email'];
+          $this->email->from($this->config->item('register'), 'New sign-in! from '.$browser.'');
+          $this->email->to($to_email);
+          $this->email->subject('New sign-in! from '.$browser.'');
+          $this->email->message($message);
+          $this->email->set_mailtype("html");
+          $this->email->send();
+          
+          $this->input->set_cookie($setLogin, TRUE);
+          redirect(site_url().'dashboard');
+      }else{
+          $this->input->set_cookie($setLogin, TRUE);
+          redirect(site_url().'dashboard');
+      }
+  }
+
+  public function logout()
+  {
+      $this->session->sess_destroy();
+      redirect(site_url().'auth');
+  }
 	
 	private function login_facebook() {
 		die("qwer");

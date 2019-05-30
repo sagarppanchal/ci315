@@ -2,7 +2,7 @@
     <h2>Welcome Back!</h2>
     <h5>Please Login.</h5>
     <?php $fattr = array('class' => 'form-signin');
-         echo form_open(site_url().'auth/auth/login/', $fattr); ?>
+         echo form_open(site_url().'auth', $fattr); ?>
     <div class="form-group">
       <?php echo form_input(array(
           'name'=>'email', 
@@ -21,12 +21,12 @@
           'value'=> set_value('password'))); ?>
       <?php echo form_error('password') ?>
     </div>
-    <?php //if($recaptcha == 'yes'){ ?>
-      <!-- <div style="text-align:center;" class="form-group">
-          <div style="display: inline-block;"><?php ///echo $this->recaptcha->render(); ?></div>
-      </div> -->
+    <?php if($recaptcha == 'yes'){ ?>
+      <div style="text-align:center;" class="form-group">
+          <div style="display: inline-block;"><?php echo $this->recaptcha->render(); ?></div>
+      </div>
     <?php
-    //}
+    }
     echo form_submit(array('value'=>'Let me in!', 'class'=>'btn btn-lg btn-primary btn-block')); ?>
     <?php echo form_close(); ?>
     <br>

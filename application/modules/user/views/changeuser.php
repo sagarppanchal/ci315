@@ -3,7 +3,7 @@
     <h5>Hello <span><?php echo $first_name; ?></span>.</h5>     
 <?php 
     $fattr = array('class' => 'form-signin');
-    echo form_open(site_url().'main/changeuser/', $fattr); ?>
+    echo form_open(site_url().'user/changeuser/', $fattr); ?>
     
     <div class="form-group">
       <?php echo form_input(array('name'=>'firstname', 'id'=> 'firstname', 'placeholder'=>'First Name', 'class'=>'form-control', 'value' => set_value('firstname', $groups->first_name))); ?>

@@ -46,27 +46,28 @@ class Main extends CI_Controller {
 
 	}
 	
-	public function checkLoginUser(){
+	public function checkLoginUser()
+    {
 	     //user data from session
-	    $data = $this->session->userdata;
-	    if(empty($data)){
-	        redirect(site_url().'main/login/');
-	    }
-	    
-	$this->load->library('user_agent');
+        $data = $this->session->userdata;
+        if(empty($data)){
+            redirect(site_url().'main/login/');
+        }
+
+        $this->load->library('user_agent');
         $browser = $this->agent->browser();
         $os = $this->agent->platform();
         $getip = $this->input->ip_address();
-        
+
         $result = $this->user_model->getAllSettings();
         $stLe = $result->site_title;
-	$tz = $result->timezone;
-	    
-	$now = new DateTime();
+        $tz = $result->timezone;
+
+        $now = new DateTime();
         $now->setTimezone(new DateTimezone($tz));
         $dTod =  $now->format('Y-m-d');
         $dTim =  $now->format('H:i:s');
-        
+
         $this->load->helper('cookie');
         $keyid = rand(1,9000);
         $scSh = sha1($keyid);
@@ -77,7 +78,7 @@ class Main extends CI_Controller {
             'expire' => strtotime("+2 year"),
         );
         $getAccess = get_cookie($neMSC);
-	    
+
         if(!$getAccess && $setLogin["name"] == $neMSC){
             $this->load->library('email');
             $this->load->library('sendmail');
@@ -97,6 +98,7 @@ class Main extends CI_Controller {
             $this->input->set_cookie($setLogin, TRUE);
             redirect(site_url().'main/');
         }
+	    
 	}
 	
 	public function settings(){
@@ -669,6 +671,7 @@ class Main extends CI_Controller {
                         exit;
                     }
                 }else{
+
                     if(!$userInfo)
                     {
                         $this->session->set_flashdata('flash_message', 'Wrong password or email.');
