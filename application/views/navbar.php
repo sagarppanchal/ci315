@@ -31,12 +31,12 @@
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-users" aria-hidden="true"></i> Users <span class="caret"></span></a>
                               <ul class="dropdown-menu">
                                 <li><a href="'.site_url().'user">Users List</a></li>
-                                <li><a href="'.site_url().'main/adduser">Add User</a></li>
-                                <li><a href="'.site_url().'main/banuser">Ban User</a></li>
-                                <li><a href="'.site_url().'main/changelevel">Role</a></li>
+                                <li><a href="'.site_url().'user/adduser">Add User</a></li>
+                                <li><a href="'.site_url().'user/banuser">Ban User</a></li>
+                                <li><a href="'.site_url().'user/changelevel">Role</a></li>
                               </ul>
                             </li>
-                            <li><a href="'.site_url().'main/settings"><i class="glyphicon glyphicon-cog" aria-hidden="true"></i> Setings</a></li>
+                            <li><a href="'.site_url().'settings"><i class="glyphicon glyphicon-cog" aria-hidden="true"></i> Setings</a></li>
                             ';
                         }
                     ?>
