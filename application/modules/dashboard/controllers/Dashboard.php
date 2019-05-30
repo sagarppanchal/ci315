@@ -14,6 +14,10 @@ class Dashboard extends CI_Controller
         $this->status = $this->config->item('status');
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
+
+        $this->load->helper('views');
+		//$data = array('test' => 'test');
+		view_loader('language/lan_view');
   	}
   
 	public function index(){
