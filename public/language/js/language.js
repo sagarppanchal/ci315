@@ -12,6 +12,8 @@ $(document).ready(function () {
 			success:function(res){
 				console.log(res);
 			}
-		})
+		}).error(function(){
+			console.log("Something went wrong while changing Language");
+		});
 	})
 });

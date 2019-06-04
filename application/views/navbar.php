@@ -23,7 +23,7 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
-                    <li><a href="<?php echo site_url();?>dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
+                    <li><a href="<?php echo site_url();?>dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i><?php echo _tr("dashboard"); ?></a></li>
                     <?php
                         if($dataLevel == 'is_admin'){ //Check user level if is Admin
                             echo'

@@ -8,12 +8,16 @@ class Dashboard extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
+		$this->load->helper('common');
 		$this->load->model('User_model', 'user_model', TRUE);
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->status = $this->config->item('status');
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
+
+        $userLang = $this->session->userdata['current_language'];
+		$this->lang->load($userLang, $userLang);
   	}
   
 	public function index(){
