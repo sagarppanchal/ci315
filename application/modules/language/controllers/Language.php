@@ -4,31 +4,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Language extends CI_Controller 
 {
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
-		$this->load->model('User_model', 'user_model', TRUE);
-        $this->load->library('form_validation');
-        $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
-        $this->status = $this->config->item('status');
-        $this->roles = $this->config->item('roles');
-        $this->load->library('userlevel');
-        $this->load->helper('language');
+		$this->load->helper('common');
+		$this->load->helper('language');
+		$this->load->database();
   	}
   
-	public function changeLanguage(){
-		die("yeah");
-		$data = $this->session->userdata;
-		if(empty($data)){
-	        redirect(site_url().'auth/auth/');
-	    }
-
-	    //check user level
-	    if(empty($data['role'])){
-	        redirect(site_url().'auth/auth/');
-	    }
+	public function changeLanguage()
+	{
+		$sdata = $this->session->userdata;
+		$postData=$this->input->post("lang");
+		$updateArray=array("current_language"=>$postData);
+		$this->db->where('id', $sdata['id']);
+		$res=$this->db->update('users',$updateArray);
+		$this->session->set_userdata($updateArray);
+		pr($this->session->userdata);
+		res($res);
 	}
-
-	
 }
