@@ -1,6 +1,6 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
-//require_once(FCPATH."vendor/thetechnicalcircle/codeigniter_social_login/src/Social.php");
 
 class Auth extends CI_Controller 
 {
@@ -174,6 +174,12 @@ class Auth extends CI_Controller
           redirect(site_url().'dashboard');
       }
   }
+
+  /*
+        logout()
+        purpose : to logout user
+        author : sagarppanchal:04-06-2019
+    */
 
   public function logout()
   {
