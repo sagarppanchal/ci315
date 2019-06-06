@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
-		$this->load->helper('common');
+		//$this->load->helper('language');
 		$this->load->model('User_model', 'user_model', TRUE);
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -48,9 +48,6 @@ class Dashboard extends CI_Controller
             $this->load->view('dashboard', $data);
             $this->load->view('footer');
 
-   //          $this->load->helper('views');
-			// //$data = array('test' => 'test');
-			// view_loader('language/language');
 			$this->load->view('language/language');
         }
 	}

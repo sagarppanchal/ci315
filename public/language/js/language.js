@@ -5,7 +5,7 @@ $(document).ready(function () {
 		//confirm("Are you sure want to change your current language to "+langLabel+"?");
 		var ajaxData={lang:lang};
 		$.ajax({
-			url:'language/changeLanguage',
+			url:'./language/changeLanguage',
 			type:"POST",
 			async:true,
 			data:ajaxData,
