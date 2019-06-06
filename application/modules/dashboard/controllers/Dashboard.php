@@ -33,20 +33,18 @@ class Dashboard extends CI_Controller
 
 	    $userLang = $this->session->userdata['current_language'];
 		$this->lang->load($userLang, $userLang);
-
-
 	    $dataLevel = $this->userlevel->checkLevel($data['role']);
 	    //check user level
         
 	    $data['title'] = "Dashboard Admin";
 	    
         if(empty($this->session->userdata['email'])){
-            redirect(site_url().'main/login/');
+            redirect(site_url().'auth');
         }else{
         	$this->load->view('header', $data);
             $this->load->view('navbar', $data);
             $this->load->view('container');
-            $this->load->view('index', $data);
+            $this->load->view('dashboard', $data);
             $this->load->view('footer');
 
    //          $this->load->helper('views');

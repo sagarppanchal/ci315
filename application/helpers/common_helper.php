@@ -44,3 +44,34 @@ if ( ! function_exists('_tr'))
         return $ci->lang->line($string);
     }   
 }
+
+/*
+    _enc($string)
+    purpose : to encrypt data using default CI method
+    author : sagarppanchal:05-05-2019
+*/
+
+if ( ! function_exists('_enc'))
+{
+    function _enc($string)
+    {
+        $ci =& get_instance();
+        return $ci->encryption->encrypt($string);
+    }
+}
+
+/*
+    _enc($string)
+    purpose : to decrypt data using default CI method
+    author : sagarppanchal:05-05-2019
+*/
+
+if ( ! function_exists('_decrypt'))
+{
+    function _decrypt($string)
+    {
+        $ci =& get_instance();
+        return $ci->encryption->decrypt($string);
+    }
+}
+
