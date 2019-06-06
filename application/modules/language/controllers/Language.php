@@ -22,7 +22,8 @@ class Language extends CI_Controller
 		$this->db->where('id', $sdata['id']);
 		$res=$this->db->update('users',$updateArray);
 		$this->session->set_userdata($updateArray);
-		pr($this->session->userdata);
-		res($res);
+		//pr($this->session->userdata);
+		echo (res($res));    
+		die;
 	}
 }

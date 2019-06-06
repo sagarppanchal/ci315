@@ -26,7 +26,7 @@ if ( ! function_exists('res'))
 {
     function res($data)
     {
-    	echo json_encode($data);
+        return json_encode($data);
     }   
 }
 
