@@ -15,10 +15,12 @@ class Dashboard extends CI_Controller
         $this->status = $this->config->item('status');
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
+
+        $userLang = $this->session->userdata['current_language'];
+		$this->lang->load($userLang, $userLang);
   	}
   
 	public function index(){
-
 		$data = $this->session->userdata;
 		if(empty($data)){
 	        redirect(site_url().'auth/auth/');
@@ -28,12 +30,6 @@ class Dashboard extends CI_Controller
 	    if(empty($data['role'])){
 	        redirect(site_url().'auth/auth/');
 	    }
-
-	    /* load language */
-
-	    $userLang = $this->session->userdata['current_language'];
-		$this->lang->load($userLang, $userLang);
-
 
 	    $dataLevel = $this->userlevel->checkLevel($data['role']);
 	    //check user level
