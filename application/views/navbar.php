@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="<?php echo site_url();?>dashboard/"><?php echo $site_title; ?></a>
+                  <a class="navbar-brand" href="<?php echo site_url();?>dashboard/"><?php echo _tr('site_title'); ?> </a>
                 </div>
             
                 <!-- Collect the nav links, forms, and other content for toggling -->

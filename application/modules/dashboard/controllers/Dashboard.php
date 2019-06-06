@@ -16,8 +16,6 @@ class Dashboard extends CI_Controller
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
 
-        $userLang = $this->session->userdata['current_language'];
-		$this->lang->load($userLang, $userLang);
   	}
   
 	public function index(){
@@ -33,7 +31,7 @@ class Dashboard extends CI_Controller
 
 	    /* load language */
 
-      $userLang = $this->session->userdata['current_language'];
+	    $userLang = $this->session->userdata['current_language'];
   		$this->lang->load($userLang, $userLang);
 
 	    $dataLevel = $this->userlevel->checkLevel($data['role']);
