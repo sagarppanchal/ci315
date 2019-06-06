@@ -7,9 +7,7 @@ class Language extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->library('session');
 		$this->load->helper('url');
-		$this->load->helper('common');
 		$this->load->helper('language');
 		$this->load->database();
   	}

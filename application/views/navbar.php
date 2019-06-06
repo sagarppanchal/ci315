@@ -46,9 +46,9 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i> <?php echo $first_name; ?> <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         <li><a href="<?php echo site_url();?>main/profile"><?php echo $email; ?></a></li>
-                        <li><a href="<?php echo site_url();?>user/changeuser">Edit Profile</a></li>
+                        <li><a href="<?php echo site_url();?>user/changeuser"><?php echo _tr("_edit_profile"); ?></a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="<?php echo base_url().'auth/logout' ?>">Log Out</a></li>
+                        <li><a href="<?php echo base_url().'auth/logout' ?>"><?php echo _tr("_logout"); ?></a></li>
                       </ul>
                     </li>
                   </ul>
