@@ -75,3 +75,19 @@ if ( ! function_exists('_decrypt'))
     }
 }
 
+/*
+    _loadLang()
+    purpose : load language
+    author : sagarppanchal:05-05-2019
+*/
+
+if ( ! function_exists('_loadLang'))
+{
+    function _loadLang()
+    {
+        $ci =& get_instance();
+        $userLang = $ci->session->userdata['current_language'];
+        $ci->lang->load($userLang, $userLang);
+    }
+}
+
