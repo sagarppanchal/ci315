@@ -38,7 +38,7 @@ class Dashboard extends CI_Controller
 	    //check user level
         
 	    $data['title'] = "Dashboard Admin";
-	    
+
         if(empty($this->session->userdata['email'])){
             redirect(site_url().'auth');
         }else{
