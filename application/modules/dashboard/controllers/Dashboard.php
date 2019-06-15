@@ -8,7 +8,7 @@ class Dashboard extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
-		$this->load->helper('common');
+		//$this->load->helper('language');
 		$this->load->model('User_model', 'user_model', TRUE);
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -16,8 +16,6 @@ class Dashboard extends CI_Controller
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
 
-        $userLang = $this->session->userdata['current_language'];
-		$this->lang->load($userLang, $userLang);
   	}
   
 	public function index(){
@@ -31,23 +29,25 @@ class Dashboard extends CI_Controller
 	        redirect(site_url().'auth/auth/');
 	    }
 
+	    /* load language */
+
+	    $userLang = $this->session->userdata['current_language'];
+  		$this->lang->load($userLang, $userLang);
+
 	    $dataLevel = $this->userlevel->checkLevel($data['role']);
 	    //check user level
         
 	    $data['title'] = "Dashboard Admin";
-	    
+
         if(empty($this->session->userdata['email'])){
-            redirect(site_url().'main/login/');
+            redirect(site_url().'auth');
         }else{
         	$this->load->view('header', $data);
             $this->load->view('navbar', $data);
             $this->load->view('container');
-            $this->load->view('index', $data);
+            $this->load->view('dashboard', $data);
             $this->load->view('footer');
 
-   //          $this->load->helper('views');
-			// //$data = array('test' => 'test');
-			// view_loader('language/language');
 			$this->load->view('language/language');
         }
 	}

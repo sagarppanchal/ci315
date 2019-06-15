@@ -111,7 +111,7 @@ class Auth extends CI_Controller
                   else
                   {
                       $this->session->set_flashdata('flash_message', 'Something Error!');
-                      redirect(site_url().'main/login');
+                      redirect(site_url().'auth');
                       exit;
                   }
               }
@@ -120,11 +120,14 @@ class Auth extends CI_Controller
         
 	}
 
+  /*
+    checkLoginUser()
+    purpose : verify user and add login entry
+  */
 
   public function checkLoginUser()
   {
-     //user data from session
-      $data = $this->session->userdata;
+    $data = $this->session->userdata;
       if(empty($data)){
           redirect(site_url().'auth');
       }
@@ -172,7 +175,7 @@ class Auth extends CI_Controller
       }else{
           $this->input->set_cookie($setLogin, TRUE);
           redirect(site_url().'dashboard');
-      }
+      }     
   }
 
   /*

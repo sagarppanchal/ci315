@@ -8,12 +8,14 @@ class Settings extends CI_Controller
 		parent::__construct();
 		$this->load->library('session');
 		$this->load->helper('url');
-		$this->load->model('User_model', 'user_model', TRUE);
+        //$this->load->helper('language');
+        $this->load->model('User_model', 'user_model', TRUE);
         $this->load->library('form_validation');
         $this->form_validation->set_error_delimiters('<div class="error">', '</div>');
         $this->status = $this->config->item('status');
         $this->roles = $this->config->item('roles');
         $this->load->library('userlevel');
+        //_loadLang();
   	}
   
 	public function index()
